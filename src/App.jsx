@@ -4,8 +4,7 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { Button, Layout, theme } from 'antd';
 
 import Sidebar from './components/Sidebar';
-import Header from './components/Header';
-import Home from './Layouts/Home/Home';
+import HeaderComponent from './components/HeaderComponent';
 import { publicRoutes } from './routes';
 import './App.css';
 
@@ -26,23 +25,11 @@ function App() {
       <Layout>
         <Sidebar collapsed={collapsed} />
         <Layout>
-          {/* <Header
+          <HeaderComponent
             collapsed={collapsed}
             colorBgContainer={colorBgContainer}
-            // setCollapsed={handleSetCollapsed}
-          /> */}
-          {/* <Header style={{ padding: 0, background: colorBgContainer }}>
-          <Button
-            type="text"
-            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            // onClick={() => handleSetCollapsed}
-            style={{
-              fontSize: '16px',
-              width: 64,
-              height: 64,
-            }}
+            setCollapsed={handleSetCollapsed}
           />
-        </Header> */}
           <Content
             style={{
               margin: '24px 16px',

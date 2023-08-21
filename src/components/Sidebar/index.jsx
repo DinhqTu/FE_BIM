@@ -45,19 +45,8 @@ function Sidebar(props) {
   const { collapsed } = props;
   const navigate = useNavigate();
   return (
-    <Sider
-      trigger={null}
-      collapsible
-      collapsed={collapsed}
-      style={{
-        minWidth: 224,
-        maxWidth: 224,
-        width: 224,
-        flex: '0 0 224px',
-        '!important': true,
-      }}
-    >
-      <div className="text-white text-lg font-extrabold text-center m-4 tracking-[5px] ">
+    <Sider trigger={null} collapsible collapsed={collapsed} width={260}>
+      <div className="text-white  text-lg font-extrabold text-center my-4 tracking-[5px] ">
         VT CODE
       </div>
       <Menu
