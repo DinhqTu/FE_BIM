@@ -1,13 +1,15 @@
 import config from '../config';
 
-import Group from '../Layouts/Group';
-import Home from '../Layouts/Home';
-import Info from '../Layouts/Info';
-import Project from '../Layouts/Project';
-import User from '../Layouts/User';
-import Dynamic from '../Layouts/Dynamic';
+import Group from '../Page/Group';
+import Home from '../Page/Home';
+import Info from '../Page/Info';
+import Project from '../Page/Project';
+import User from '../Page/User';
+import Dynamic from '../Page/Dynamic';
+import Login from '../Page/Login/Login';
 
 export const publicRoutes = [
+  { path: config.routes.login, component: Login, Layout: null },
   { path: config.routes.bangthongtin, component: Home },
   { path: config.routes.duan, component: Project },
   { path: config.routes.nguoidung, component: User },

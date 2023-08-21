@@ -32,7 +32,7 @@ function HeaderComponent(props) {
               name=""
               id=""
               placeholder="Tìm kiếm . . ."
-              className="px-4 border border-2  rounded-full w-[280px] h-8 "
+              className="px-4 border border-2  rounded-full w-[280px] h-8 focus:border-transparent"
             />
             <SearchOutlined
               style={{ position: 'absolute', right: 14, top: 25, cursor: 'pointer' }}

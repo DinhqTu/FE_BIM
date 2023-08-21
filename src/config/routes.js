@@ -11,4 +11,5 @@ export const routes = {
   trangthaidulieu: 'trang-thai-du-lieu',
   bangmau: 'bang-mau',
   chondoitac: 'chon-doi-tac',
+  login: 'login',
 };

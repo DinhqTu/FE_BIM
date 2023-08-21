@@ -41,11 +41,18 @@ const items = [
   ]),
 ];
 
+// overflow: 'auto', position: 'fixed',
 function Sidebar(props) {
   const { collapsed } = props;
   const navigate = useNavigate();
   return (
-    <Sider trigger={null} collapsible collapsed={collapsed} width={260}>
+    <Sider
+      trigger={null}
+      collapsible
+      collapsed={collapsed}
+      width={260}
+      style={{ left: 0, top: 0, bottom: 0 }}
+    >
       <div className="text-white  text-lg font-extrabold text-center my-4 tracking-[5px] ">
         VT CODE
       </div>
@@ -57,8 +64,8 @@ function Sidebar(props) {
           height: '100vh',
         }}
         items={items}
-        onClick={(key) => {
-          navigate(key.key);
+        onClick={(item) => {
+          item.key === '/' ? navigate('/') : navigate(`/${item.key}`);
         }}
       />
     </Sider>
