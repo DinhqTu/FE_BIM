@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { Modal, Card } from 'antd';
-import { BankOutlined } from '@ant-design/icons';
-
+import { Modal, Card, Avatar, List } from 'antd';
+import { BankOutlined, KeyOutlined, CheckSquareOutlined } from '@ant-design/icons';
 import map from '../../assets/image/4-final.jpg';
 const tabListNoTitle = [
   {
@@ -20,11 +19,23 @@ const tabListNoTitle = [
     label: 'Chi tiết',
     key: 'detail',
   },
+];
+
+const data = [
   {
-    label: 'Lịch sử',
-    key: 'history',
+    title: 'Ant Design Title 1',
+  },
+  {
+    title: 'Ant Design Title 2',
+  },
+  {
+    title: 'Ant Design Title 3',
+  },
+  {
+    title: 'Ant Design Title 4',
   },
 ];
+
 const contentListNoTitle = {
   overview: (
     <div>
@@ -91,12 +102,106 @@ const contentListNoTitle = {
     </div>
   ),
   member: (
-    <div className="flex justify-between">
-      <div>
+    <div className="flex justify-between gap-x-2">
+      <div className="flex-grow">
         <h1>Các Nhóm</h1>
+        <List
+          itemLayout="horizontal"
+          dataSource={data}
+          renderItem={(item, index) => (
+            <List.Item>
+              <List.Item.Meta
+                avatar={
+                  <Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`} />
+                }
+                title={<a href="https://ant.design">{item.title}</a>}
+                // description="Ant Design, a design language for background applications."
+              />
+            </List.Item>
+          )}
+        />
       </div>
-      <div>
+      <div className="flex-grow">
         <h1>Nhóm Thuộc Dự Án</h1>
+        <List
+          itemLayout="horizontal"
+          dataSource={data}
+          renderItem={(item, index) => (
+            <List.Item>
+              <List.Item.Meta
+                avatar={
+                  <Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`} />
+                }
+                title={<a href="https://ant.design">{item.title}</a>}
+                // description="Ant Design, a design language for background applications."
+              />
+            </List.Item>
+          )}
+        />
+      </div>
+    </div>
+  ),
+  detail: (
+    <div>
+      <div className="flex justify-between gap-x-4">
+        <div className="flex-grow">
+          <div className="flex items-center gap-3 mb-2">
+            <KeyOutlined /> Hợp đồng
+          </div>
+          <select className="border py-2 w-full" name="" id="">
+            <option value="">Lựa chọn hợp đồng</option>
+            <option value="">option 1</option>
+            <option value="">option 2</option>
+            <option value="">option 3</option>
+          </select>
+        </div>
+        <div className="flex-grow">
+          <div className="flex items-center gap-3 mb-2">
+            <KeyOutlined /> Hợp đồng
+          </div>
+          <select className="border py-2 w-full" name="" id="">
+            <option value="">Lựa chọn hợp đồng</option>
+            <option value="">option 1</option>
+            <option value="">option 2</option>
+            <option value="">option 3</option>
+          </select>
+        </div>
+        <div className="flex-grow">
+          <div className="flex items-center gap-3 mb-2">
+            <KeyOutlined /> Hợp đồng
+          </div>
+          <select className="border py-2 w-full" name="" id="">
+            <option value="">Lựa chọn hợp đồng</option>
+            <option value="">option 1</option>
+            <option value="">option 2</option>
+            <option value="">option 3</option>
+          </select>
+        </div>
+      </div>
+      <div className="flex justify-between">
+        <div className="">
+          <div className="my-3">
+            <CheckSquareOutlined /> Ngày ký hợp đồng
+          </div>
+          <input className="border p-2" type="date" name="" id="" />
+        </div>
+        <div className=" flex-grow mx-12">
+          <div className="my-3">
+            <CheckSquareOutlined /> Hợp đồng với
+          </div>
+          <input className="border p-2 w-full" type="text" name="" id="" />
+        </div>
+        <div className="">
+          <div className="my-3">
+            <CheckSquareOutlined /> Trạng thái
+          </div>
+          <select className="border py-2 w-full" name="" id="">
+            <option value="">Select ...</option>
+            <option value="">option 1</option>
+            <option value="">option 2</option>
+            <option value="">option 3</option>
+          </select>
+        </div>
       </div>
     </div>
   ),
@@ -105,13 +210,10 @@ const contentListNoTitle = {
 function ModalAddProject(props) {
   const { open, handleOpenModal } = props;
 
-  const [activeTabKey1, setActiveTabKey1] = useState('tab1');
-  const [activeTabKey2, setActiveTabKey2] = useState('app');
-  const onTab1Change = (key) => {
-    setActiveTabKey1(key);
-  };
+  const [activeTabKey, setActiveTabKey] = useState('overview');
+
   const onTab2Change = (key) => {
-    setActiveTabKey2(key);
+    setActiveTabKey(key);
   };
   return (
     <>
@@ -127,12 +229,13 @@ function ModalAddProject(props) {
         <Card
           style={{
             width: '100%',
+            minHeight: '75vh',
           }}
           tabList={tabListNoTitle}
-          activeTabKey={activeTabKey2}
+          activeTabKey={activeTabKey}
           onTabChange={onTab2Change}
         >
-          {contentListNoTitle[activeTabKey2]}
+          {contentListNoTitle[activeTabKey]}
         </Card>
       </Modal>
     </>

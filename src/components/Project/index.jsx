@@ -43,19 +43,21 @@ function Project(props) {
           {/* <Meta title="Card title" description="22/08/23" style={{ cursor: 'pointer' }} /> */}
         </Card>
       ) : (
-        <div className="flex justify-between border-b-2 py-2 px-4 hover:bg-[#3B5999] hover:text-white cursor-pointer">
-          <div className="flex items-center gap-4">
-            <FolderOutlined style={{ fontSize: 18 }} />
-            <p className="font-semibold">Cầu Long Biên</p>
+        <Link to={'/model'}>
+          <div className="flex justify-between border-b-2 py-2 px-4 hover:bg-[#3B5999] hover:text-white cursor-pointer">
+            <div className="flex items-center gap-4">
+              <FolderOutlined style={{ fontSize: 18 }} />
+              <p className="font-semibold">Cầu Long Biên</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <UserOutlined />
+              <span>tôi</span>
+            </div>
+            <div>22 thg 8, 2023</div>
+            <div>136,8 MB</div>
+            <MoreOutlined />
           </div>
-          <div className="flex items-center gap-2">
-            <UserOutlined />
-            <span>tôi</span>
-          </div>
-          <div>22 thg 8, 2023</div>
-          <div>136,8 MB</div>
-          <MoreOutlined />
-        </div>
+        </Link>
       )}
     </>
   );
