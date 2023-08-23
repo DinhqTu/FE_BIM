@@ -12,4 +12,6 @@ export const routes = {
   bangmau: 'bang-mau',
   chondoitac: 'chon-doi-tac',
   login: 'login',
+  register: 'register',
+  model: 'model',
 };

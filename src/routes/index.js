@@ -6,7 +6,9 @@ import Info from '../Page/Info';
 import Project from '../Page/Project';
 import User from '../Page/User';
 import Dynamic from '../Page/Dynamic';
-import Login from '../Page/Login/Login';
+import Login from '../Page/Login';
+import Model from '../Page/Model';
+import Register from '../Page/Register';
 
 export const publicRoutes = [
   { path: config.routes.login, component: Login, Layout: null },
@@ -22,4 +24,6 @@ export const publicRoutes = [
   { path: config.routes.trangthaidulieu, component: Dynamic },
   { path: config.routes.bangmau, component: Dynamic },
   { path: config.routes.chondoitac, component: Dynamic },
+  { path: config.routes.model, component: Model },
+  { path: config.routes.register, component: Register, Layout: null },
 ];

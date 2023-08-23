@@ -51,8 +51,8 @@ function HeaderComponent(props) {
               cursor: 'pointer',
               rotate: '45deg',
             }}
-          />
-          <div className="flex flex-grow justify-center items-center bg-[#0c3f70] h-full text-white px-4 cursor-pointer ">
+          />{' '}
+          <div className="flex flex-grow justify-center items-center bg-[#3b5999] h-full text-white px-4 cursor-pointer ">
             <UserOutlined style={{ fontSize: '20px', padding: 8 }} />
             <span className="text-base  ">Dinh Tu</span>
             <DownOutlined style={{ marginLeft: 4 }} />

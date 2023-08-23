@@ -51,17 +51,19 @@ function Sidebar(props) {
       collapsible
       collapsed={collapsed}
       width={260}
-      style={{ left: 0, top: 0, bottom: 0 }}
+      style={{ left: 0, top: 0, bottom: 0, backgroundColor: '#3b5999' }}
     >
       <div className="text-white  text-lg font-extrabold text-center my-4 tracking-[5px] ">
         VT CODE
       </div>
       <Menu
-        theme="dark"
+        theme="light"
         mode="inline"
         defaultSelectedKeys={['/']}
         style={{
           height: '100vh',
+          backgroundColor: '#3b5999',
+          color: '#fff',
         }}
         items={items}
         onClick={(item) => {

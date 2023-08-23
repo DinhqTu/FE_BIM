@@ -13,10 +13,10 @@ function User() {
           className="px-4 border border-2  rounded-full w-[280px] h-8 focus:border-transparent"
         />
         <div>
-          <button className="border p-2 mr-4 hover:border-blue-600 hover:text-blue-600">
+          <button className="border p-2 mr-4 hover:border-[#3b5999] hover:text-[#3b5999]">
             Gửi lời mời
           </button>
-          <button className="border p-2 hover:border-blue-600 hover:text-blue-600">
+          <button className="border p-2 hover:border-[#3b5999] hover:text-[#3b5999]">
             Danh sách mới
           </button>
         </div>

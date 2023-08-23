@@ -1,6 +1,7 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 import { Layout } from 'antd';
+import Map from 'react-map-gl';
 
 export const data = {
   labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
@@ -41,7 +42,24 @@ function Home() {
           minHeight: 280,
         }}
       >
-        <div className="flex justify-between mx-8 mb-4">
+        <div>
+          <Map
+            mapboxAccessToken="pk.eyJ1IjoiZGluaHR1MDgwNjAxIiwiYSI6ImNsbGxwcnRlcTI4d28zY21rYmh6Z205eHQifQ.XyjAMhumCi9ztQYI-1jLSw"
+            initialViewState={{
+              longitude: 106.717, // kinh độ
+              latitude: 10.788, // vĩ độ
+              zoom: 16,
+              pitch: 35, // góc nghiêng của map
+              bearing: -80, // góc quay của bản đồ
+              antialias: true,
+            }}
+            style={{ width: '100%', height: 500 }}
+            mapStyle="mapbox://styles/mapbox/streets-v9"
+          />
+        </div>
+
+        {/* <div id="map"></div> */}
+        <div className="flex justify-between mx-8 mt-14 mb-4">
           <div>
             <div>Số ngày</div>
             <div>60</div>

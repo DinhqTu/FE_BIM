@@ -1,5 +1,7 @@
 import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import { Avatar, Card } from 'antd';
+
+import groupUser from '../../assets/image/3-final.jpg';
 const { Meta } = Card;
 
 function GroupCard() {
@@ -8,12 +10,7 @@ function GroupCard() {
       style={{
         width: 210,
       }}
-      cover={
-        <img
-          alt="example"
-          src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-        />
-      }
+      cover={<img alt="example" src={groupUser} />}
       actions={[
         <PlusOutlined key="add" />,
         <EditOutlined key="edit" />,
@@ -21,7 +18,7 @@ function GroupCard() {
       ]}
     >
       <Meta
-        avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />}
+        avatar={<Avatar src={groupUser} />}
         title="Card title"
         description="This is the description"
       />
