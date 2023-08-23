@@ -1,46 +1,60 @@
+import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
+
 import registerImage from '../../assets/image/signup-image.jpg';
 
 function Register() {
   return (
     <div className="main">
       <section className="signup">
-        <div className="container">
+        <div className="container2">
           <div className="signup-content">
             <div className="signup-form">
-              <h2 className="form-title">Sign up</h2>
+              <h2 className="form-title text-4xl font-extrabold">Sign up</h2>
               <form method="POST" className="register-form" id="register-form">
-                <div className="form-group">
-                  <label for="name">
-                    <i className="zmdi zmdi-account material-icons-name"></i>
-                  </label>
-                  <input type="text" name="name" id="name" placeholder="Your Name" />
-                </div>
-                <div className="form-group">
-                  <label for="email">
-                    <i className="zmdi zmdi-email"></i>
-                  </label>
-                  <input type="email" name="email" id="email" placeholder="Your Email" />
-                </div>
-                <div className="form-group">
-                  <label for="pass">
-                    <i className="zmdi zmdi-lock"></i>
-                  </label>
-                  <input type="password" name="pass" id="pass" placeholder="Password" />
-                </div>
-                <div className="form-group">
-                  <label for="re-pass">
-                    <i className="zmdi zmdi-lock-outline"></i>
-                  </label>
+                <div className="form-group flex items-center gap-x-3">
+                  <UserOutlined />
                   <input
+                    className="input focus:outline-none w-full"
+                    type="text"
+                    name="name"
+                    id="name"
+                    placeholder="Your Name"
+                  />
+                </div>
+                <div className="form-group flex items-center gap-x-3">
+                  <MailOutlined />
+                  <input
+                    className="input focus:outline-none w-full"
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="Your Email"
+                  />
+                </div>
+                <div className="form-group flex items-center gap-x-3">
+                  <LockOutlined />
+                  <input
+                    className="input focus:outline-none w-full"
+                    type="password"
+                    name="pass"
+                    id="pass"
+                    placeholder="Password"
+                  />
+                </div>
+                <div className="form-group flex items-center gap-x-3">
+                  <LockOutlined />
+                  <input
+                    className="input focus:outline-none w-full"
                     type="password"
                     name="re_pass"
                     id="re_pass"
                     placeholder="Repeat your password"
                   />
                 </div>
-                <div className="form-group">
+                <div className="form-group flex gap-2">
                   <input type="checkbox" name="agree-term" id="agree-term" className="agree-term" />
-                  <label for="agree-term" className="label-agree-term">
+                  <label className="label-agree-term">
                     <span>
                       <span></span>
                     </span>
@@ -55,7 +69,7 @@ function Register() {
                     type="submit"
                     name="signup"
                     id="signup"
-                    className="form-submit"
+                    className="input form-submit"
                     value="Register"
                   />
                 </div>
@@ -65,9 +79,9 @@ function Register() {
               <figure>
                 <img src={registerImage} alt="sing up image" />
               </figure>
-              <a href="#" className="signup-image-link">
+              <Link to="/login" className="signup-image-link">
                 I am already member
-              </a>
+              </Link>
             </div>
           </div>
         </div>
