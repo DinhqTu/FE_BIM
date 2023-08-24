@@ -6,8 +6,9 @@ import {
   ExpandAltOutlined,
   QuestionCircleOutlined,
 } from '@ant-design/icons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
+import { ControlModel } from '../../control/button';
 const BUTTON = [
   { icon: <ClusterOutlined /> },
   { icon: <FilterOutlined /> },
@@ -16,16 +17,25 @@ const BUTTON = [
   { icon: <UnorderedListOutlined /> },
   { icon: <QuestionCircleOutlined /> },
 ];
-function ButtonControl() {
+function ButtonControl(props) {
+  const { viewer } = props;
+
+  const button = new ControlModel(viewer);
+  console.log('viewer', viewer);
+
   const initialClickedButtons = new Array(BUTTON.length).fill(false);
-  initialClickedButtons[0] = true;
+  // initialClickedButtons[0] = true;
   const [clickedButtons, setClickedButtons] = useState(initialClickedButtons);
 
   const handleButtonClick = (index) => {
     const updatedClickedButtons = new Array(BUTTON.length).fill(false);
     updatedClickedButtons[index] = !updatedClickedButtons[index];
     setClickedButtons(updatedClickedButtons);
+    console.log('button.createPlane(clickedButtons[3])', button.createPlane());
+    button.createPlane();
   };
+  console.log(clickedButtons);
+
   return (
     <div className="flex fixed bottom-8 left-1/2">
       {BUTTON.map((item, index) => (
