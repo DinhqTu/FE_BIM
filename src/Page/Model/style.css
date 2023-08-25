@@ -2,8 +2,21 @@ canvas {
   width: 100% !important;
 }
 
+main {
+  padding: 0 !important;
+}
+
 #viewer-container {
   position: relative;
+}
+
+.ifc-cube-view {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index:5;
+  display: initial !important;
+
 }
 
 .ifc-property-menu {

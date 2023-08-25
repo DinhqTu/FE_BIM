@@ -3,10 +3,13 @@ import { Color } from 'three';
 import { IfcViewerAPI } from 'web-ifc-viewer';
 import ButtonControl from '../../components/ButtonControl';
 import PropertyMenu from '../../components/PropertyMenu';
+// import { CubeControls } from '../../core/CubeControl';
 import './style.css';
 
 function Project() {
   const modelView = useRef(null);
+  const cubeView = useRef(null);
+  const cubeCanvas = useRef(null);
   const [props, setProps] = useState({});
   const [viewer, setViewer] = useState(null);
 
@@ -37,16 +40,22 @@ function Project() {
     }
 
     loadIfc('../../../src/assets/models/Duplex-A-MEP.ifc');
+    
+    // const cubeCT = new CubeControls(cubeView.current, cubeCanvas.current, true);
 
   }, []);
 
   return (
     <section>
       <ButtonControl viewer={viewer} />
-      <div className="h-[70vh] w-full" id="viewer-container" ref={modelView} onMouseMove={() => viewer.IFC.selector.prePickIfcItem()}
+      <div className="h-[80vh] w-full" id="viewer-container" ref={modelView} onMouseMove={() => viewer.IFC.selector.prePickIfcItem()}
         onMouseDown={(e) => console.log(e)}
-        onDoubleClick={()  => handlePick()}
+        onDoubleClick={() => handlePick()}
       >
+        <div className='ifc-cube-view' ref={cubeView}>
+					<canvas ref={cubeCanvas}></canvas>
+
+        </div>
         <div className='ifc-property-menu'>
           {props ? <PropertyMenu properties={props} /> : null} 
         </div>
