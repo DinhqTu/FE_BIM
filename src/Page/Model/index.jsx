@@ -9,14 +9,12 @@ import './style.css';
 
 function Project() {
   const modelView = useRef(null);
-  const cubeView = useRef(null);
-  const cubeCanvas = useRef(null);
+  // const cubeView = useRef(null);
+  // const cubeCanvas = useRef(null);
   const [model, setModel] = useState({});
-  const [clipping, setClippingActive] = useState(false);
+  // const [clipping, setClippingActive] = useState(false);
   const [tree, setTreeActive] = useState(false);
   const [highlight, setHighlightActive] = useState(false);
-  const initialClickedButtons = new Array(6).fill(false);
-  const [clickedButtons, setClickedButtons] = useState(initialClickedButtons);
   const [props, setProps] = useState({});
   const [viewer, setViewer] = useState(null);
   const [treeRoot, setTreeRoot] = useState({});
@@ -32,11 +30,8 @@ function Project() {
 
   async function handleTree() {
     const ifcProject = await viewer.IFC.getSpatialStructure(model.modelID);
-    console.log(ifcProject);
-    // await setupAllCategories(); //for ifc categories filter
-    // createTreeMenu(ifcProject);
+
     setTreeRoot(ifcProject);
-  
   }
 
   useEffect(() => {
@@ -74,8 +69,6 @@ function Project() {
       <ButtonControl
         viewer={viewer}
         container={modelView.current}
-        initialClickedButtons={initialClickedButtons}
-        setClickedButtons={setClickedButtons}
         highlight={highlight}
         setHighlightActive={setHighlightActive}
         tree={tree}
@@ -97,7 +90,7 @@ function Project() {
           <canvas ref={cubeCanvas}></canvas>
         </div> */}
         <div className="ifc-property-menu">
-          {props ? <PropertyMenu properties={props} /> : null}
+          {props && highlight ? <PropertyMenu properties={props} /> : null}
         </div>
       </div>
     </section>
