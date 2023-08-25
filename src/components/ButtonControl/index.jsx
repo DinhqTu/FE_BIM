@@ -44,10 +44,10 @@ function ButtonControl(props) {
   //   setClickedButtons(updatedClickedButtons);
   // };
   return (
-    <div className="flex fixed bottom-8 left-1/2 -translate-x-1/2 z-10">
+    <div className=" flex fixed bottom-8 left-1/2 -translate-x-1/2 z-10">
       {BUTTON.map((item, index) => (
         <div
-          className={`w-8 h-8 rounded-full hover:bg-gray-700 hover:text-white cursor-pointer ml-5 flex justify-center items-center ${
+          className={` button w-8 h-8 rounded-full hover:bg-gray-700 hover:text-white cursor-pointer ml-5 flex justify-center items-center ${
             clickedButtons[index] ? 'bg-gray-700 text-white' : ''
           }`}
           key={index}
