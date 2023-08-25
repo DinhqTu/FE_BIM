@@ -6,11 +6,11 @@ export class ControlModel {
     this.viewer = viewer;
   }
 
-  createPlane() {
-    // if (clippingPlaneActive) {
-    this.viewer.clipper.createPlane();
-    // } else {
-    //   this.viewer.clipper.deleteAllPlanes();
-    // }
+  createPlane(clippingPlaneActive) {
+    if (clippingPlaneActive) {
+      this.viewer.clipper.createPlane();
+    } else {
+      this.viewer.clipper.deleteAllPlanes();
+    }
   }
 }
