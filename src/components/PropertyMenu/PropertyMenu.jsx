@@ -6,7 +6,7 @@ function PropertyMenu(props) {
   return (
     <>
         {Object.keys({ ...properties }).map((key) => {
-            console.log(`${key}: ${{...properties[key]}.value}`);
+            // console.logk(`${key}: ${{...properties[key]}.value}`);
             return (
                 <PropertyItem
                 key={key}
