@@ -4,15 +4,20 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, useGLTF } from '@react-three/drei';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
-import signIn from '../../assets/image/signin-image.jpg';
-import Model3D from '../../components/Model3D';
 import './style.css';
 
 export function Model(props) {
-  const { nodes, materials } = useGLTF('../../assets/model3d1.glb');
+  const group = useRef();
+  const { nodes, materials } = useGLTF('../../../src/assets/model3d1.glb');
+
+  useFrame(({ clock }) => {
+    group.current.rotation.y = clock.getElapsedTime() / 2;
+    group.current.rotation.x = clock.getElapsedTime() / 2;
+    group.current.rotation.z = clock.getElapsedTime() / 2;
+  });
   return (
-    <group {...props} dispose={null}>
-      <group scale={0.01}>
+    <group {...props} ref={group} dispose={null}>
+      <group scale={1.5}>
         <mesh geometry={nodes.base2.geometry} material={nodes.base2.material} />
         <mesh geometry={nodes.keyboard3.geometry} material={nodes.keyboard3.material} />
         <mesh
@@ -37,10 +42,12 @@ function Login() {
             <div className="signin-image">
               <figure>
                 {/* <img src={signIn} alt="sing up image" /> */}
-                <Canvas camera={{ fov: 70, position: [0, 0, 65] }}>
+                <Canvas camera={{ fov: 70, position: [20, 20, 65] }}>
                   <Suspense fallback={null}>
                     <ambientLight />
+                    <directionalLight intensity={2} position={[0, 0, 50]} />
                     <Model />
+                    <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} />
                   </Suspense>
                 </Canvas>
               </figure>

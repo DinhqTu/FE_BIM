@@ -1,7 +1,10 @@
-import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
+import { useRef, Suspense } from 'react';
 import { Link } from 'react-router-dom';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { OrbitControls, useGLTF } from '@react-three/drei';
+import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
 
-import registerImage from '../../assets/image/signup-image.jpg';
+import { Model } from '../Login/Login';
 
 function Register() {
   return (
@@ -77,7 +80,14 @@ function Register() {
             </div>
             <div className="signup-image">
               <figure>
-                <img src={registerImage} alt="sing up image" />
+                <Canvas camera={{ fov: 70, position: [20, 20, 65] }}>
+                  <Suspense fallback={null}>
+                    <ambientLight />
+                    <directionalLight intensity={2} position={[0, 0, 50]} />
+                    <Model />
+                    <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} />
+                  </Suspense>
+                </Canvas>
               </figure>
               <Link to="/login" className="signup-image-link">
                 I am already member

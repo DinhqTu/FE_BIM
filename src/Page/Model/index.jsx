@@ -1,11 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
 import { Color } from 'three';
-import { IfcViewerAPI } from 'web-ifc-viewer';
 import { Link } from 'react-router-dom';
-
-import ButtonControl from '../../components/ButtonControl';
-import './style.css';
-import { ControlModel } from '../../control/button';
+import { IfcViewerAPI } from 'web-ifc-viewer';
+import { useEffect, useRef, useState } from 'react';
 import {
   ClusterOutlined,
   FilterOutlined,
@@ -14,6 +10,10 @@ import {
   ExpandAltOutlined,
   QuestionCircleOutlined,
 } from '@ant-design/icons';
+
+import ButtonControl from '../../components/ButtonControl';
+import './style.css';
+import { ControlModel } from '../../control/button';
 const BUTTON = [
   { icon: <ClusterOutlined /> },
   { icon: <FilterOutlined /> },
@@ -43,7 +43,6 @@ function Project() {
       // viewer.grid.setGrid();
       viewer.IFC.setWasmPath('../../../wasm/');
     }
-    console.log(viewer);
     setViewer(viewer);
     async function loadIfc(url) {
       // Load the model
@@ -61,7 +60,7 @@ function Project() {
       const ifcProject = await viewer.IFC.getSpatialStructure(model.modelID);
       setTree(ifcProject);
       // await setupAllCategories(); //for ifc categories filter
-      // createTreeMenu(ifcProject);
+      createTreeMenu(ifcProject);
     }
 
     loadIfc('../../../src/assets/models/TESTED_Simple_project_01.ifc');
@@ -80,10 +79,145 @@ function Project() {
 
     viewer.clipper.active = true;
 
+    ////////////////////////  CREATE CONTAINER TREE   ////////////////////////
+
+    function createIfcTreeMenu() {
+      const ifcTreeMenuDiv = document.createElement('div');
+      ifcTreeMenuDiv.className = 'ifc-tree-menu';
+      ifcTreeMenuDiv.id = 'ifc-tree-menu';
+      ifcTreeMenuDiv.style.display = 'none';
+
+      const myUL = document.createElement('ul');
+      myUL.id = 'myUL';
+
+      const treeRoot = document.createElement('li');
+      treeRoot.id = 'tree-root';
+
+      const caretSpan = document.createElement('span');
+      caretSpan.className = 'caret';
+      const ulNested = document.createElement('ul');
+      ulNested.className = 'nested';
+
+      treeRoot.appendChild(caretSpan);
+      treeRoot.appendChild(ulNested);
+      myUL.appendChild(treeRoot);
+      ifcTreeMenuDiv.appendChild(myUL);
+
+      document.getElementById('section').appendChild(ifcTreeMenuDiv);
+    }
+
+    createIfcTreeMenu();
+
+    //////////////////////////// TREE PROPERTIES //////////////////////////
+    function createTreeMenu(ifcProject) {
+      const root = document.getElementById('tree-root');
+      removeAllChildren(root);
+      const ifcProjectNode = createNestedChild(root, ifcProject);
+      ifcProject.children.forEach((child) => {
+        constructTreeMenuNode(ifcProjectNode, child);
+      });
+    }
+
+    // trả về 1 string : IFCPROJECT-119
+    function nodeToString(node) {
+      return `${node.type} - ${node.expressID}`;
+    }
+
+    function constructTreeMenuNode(parent, node) {
+      const children = node.children;
+      if (children.length === 0) {
+        createSimpleChild(parent, node);
+        return;
+      }
+      const nodeElement = createNestedChild(parent, node);
+      children.forEach((child) => {
+        constructTreeMenuNode(nodeElement, child);
+      });
+    }
+
+    function createNestedChild(parent, node) {
+      const content = nodeToString(node);
+      const root = document.createElement('li');
+      createTitle(root, content);
+      const childrenContainer = document.createElement('ul');
+      childrenContainer.classList.add('nested');
+      root.appendChild(childrenContainer);
+      parent.appendChild(root);
+      return childrenContainer;
+    }
+
+    function createTitle(parent, content) {
+      const title = document.createElement('span');
+      title.classList.add('caret');
+      title.onclick = () => {
+        title.parentElement.querySelector('.nested').classList.toggle('tree-active');
+        title.classList.toggle('caret-down');
+      };
+      title.textContent = content;
+      parent.appendChild(title);
+    }
+
+    function createSimpleChild(parent, node) {
+      const content = nodeToString(node);
+      const childNode = document.createElement('li');
+      childNode.classList.add('leaf-node');
+      childNode.textContent = content;
+      parent.appendChild(childNode);
+      childNode.onmouseenter = async () => {
+        await viewer.IFC.selector.prepickIfcItemsByID(0, [node.expressID]);
+      };
+
+      childNode.onclick = async () => {
+        await viewer.IFC.selector.pickIfcItemsByID(0, [node.expressID], true);
+
+        let idsArray = [node.expressID];
+
+        const props = await viewer.IFC.getProperties(0, idsArray[0], true, false);
+        // console.log('props', props); //call the function here
+        createPropertiesMenu(props);
+      };
+    }
+
+    //IFC properties menu functions
+    function createPropertiesMenu(properties) {
+      // removeAllChildren(propsGUI);
+
+      delete properties.psets;
+      delete properties.mats;
+      delete properties.type;
+
+      for (let key in properties) {
+        createPropertyEntry(key, properties[key]);
+      }
+    }
+
+    function createPropertyEntry(key, value) {
+      const propContainer = document.createElement('div');
+      propContainer.classList.add('ifc-property-item');
+
+      if (value === null || value === undefined) value = 'undefined';
+      else if (value.value) value = value.value;
+
+      const keyElement = document.createElement('div');
+      keyElement.textContent = key;
+      propContainer.appendChild(keyElement);
+
+      const valueElement = document.createElement('div');
+      valueElement.classList.add('ifc-property-value');
+      valueElement.textContent = value;
+      propContainer.appendChild(valueElement);
+
+      // propsGUI.appendChild(propContainer);
+    }
+
+    function removeAllChildren(element) {
+      while (element.firstChild) {
+        element.removeChild(element.firstChild);
+      }
+    }
+
+    // remove event listeners
     return () => {
-      // window.removeEventListener('dblclick', () => {
-      //   viewer.IFC.selector.pickIfcItem(true);
-      // });
       window.removeEventListener('mousemove', () => {
         viewer.IFC.selector.pickIfcItem();
       });
@@ -108,7 +242,7 @@ function Project() {
     }
   };
 
-  //// create and delete plane
+  ////////////////////////  create and delete plane   ////////////////////////
   const handleCreatePlane = async () => {
     await viewer.clipper.createPlane();
   };
@@ -117,13 +251,7 @@ function Project() {
     await viewer.clipper.deleteAllPlanes();
   };
 
-  if (clickedButtons[2]) {
-    window.addEventListener('dblclick', handleCreatePlane);
-  } else {
-    handleDeletePlane();
-  }
-
-  // dimentions
+  //////////////////////// dimentions  ////////////////////////
   const handleDimentions = async () => {
     await viewer.dimensions.create();
     viewer.dimensions.active = true;
@@ -135,33 +263,40 @@ function Project() {
     viewer.dimensions.previewActive = false;
   };
 
-  if (clickedButtons[3]) {
-    window.addEventListener('dblclick', handleDimentions);
-  } else {
-    handleRemoveDimentions();
+  if (viewer) {
+    if (clickedButtons[2]) {
+      window.addEventListener('dblclick', handleCreatePlane);
+    } else {
+      handleDeletePlane();
+    }
+
+    if (clickedButtons[3]) {
+      window.addEventListener('dblclick', handleDimentions);
+    } else {
+      handleRemoveDimentions();
+    }
   }
 
-  /// tree
-  const handelTree = (data) => {
-    // data.children.forEach((child) => {
-    //   console.log(child);
-    // });
-    console.log('tree', data);
-  };
+  //////////////////////// TOGGLE TREE PROPERTIES  ////////////////////////
 
-  handelTree(tree);
+  const propertiesButton = document.getElementById('ifc-tree-menu');
+  if (propertiesButton) {
+    if (clickedButtons[0]) {
+      propertiesButton.style.display = 'initial';
+    } else {
+      propertiesButton.style.display = 'none';
+    }
+  }
 
   return (
-    <section className="h-[100vh]">
+    <section id="section" className="h-[100vh]">
       <Link
         to={'/cac-du-an'}
-        className="cursor-pointer flex justify-center items-center absolute top-10 left-10 border-2 hover:bg-slate-500 px-3 py-2 rounded-full"
+        className="cursor-pointer flex justify-center items-center absolute top-10 left-10 border-2 hover:bg-slate-500 px-3 py-2 rounded-full z-[1]"
       >
         <box-icon name="arrow-back"></box-icon>
       </Link>
       <div className="flex justify-center items-center mb-2">
-        {/* <div id="ifc-property-menu-root"></div> */}
-
         <ButtonControl
           viewer={viewer}
           BUTTON={BUTTON}
@@ -170,7 +305,6 @@ function Project() {
         />
       </div>
       <div className="h-[100vh] w-full" id="viewer-container" ref={ModelView}></div>
-      {/* <div className="w-full bg-slate-400 h-[65vh]"></div> */}
     </section>
   );
 }
