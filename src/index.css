@@ -4,3 +4,54 @@
 
 @tailwind components;
 @tailwind utilities;
+
+/* Style the caret/arrow */
+.caret {
+  cursor: pointer;
+  user-select: none; /* Prevent text selection */
+}
+
+/* Create the caret/arrow with a unicode, and style it */
+.caret::before {
+  content: '\25B6';
+  color: black;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+/* Rotate the caret/arrow icon when clicked on (using JavaScript) */
+.caret-down::before {
+  transform: rotate(90deg);
+}
+
+/* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
+.tree-active {
+  display: block;
+  margin-left: 10px;
+}
+
+.ifcjs-dimension-preview {
+  width: 1rem;
+  height: 1rem;
+  background-color: #ffa50f;
+  border-radius: 1rem;
+  opacity: 0.5;
+}
+
+.ifcjs-dimension-label {
+  background-color: black;
+  color: white;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.helpdoc {
+  position: fixed;
+  width: 30%;
+  height: 35%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+}

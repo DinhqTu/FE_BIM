@@ -9,7 +9,7 @@ import {
 import { Avatar, Card } from 'antd';
 import { Link } from 'react-router-dom';
 
-import groupUser from '../../assets/image/PICTURE 4K/[191217]_TT Pedestrian_Bridge_C21.jpg';
+import groupUser from '../../assets/image/final.jpg';
 
 const { Meta } = Card;
 function Project(props) {

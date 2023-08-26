@@ -224,7 +224,7 @@ list-type-ulli,
 }
 
 .container2 {
-  width: 900px;
+  width: 1000px;
   background: #fff;
   margin: 0 auto;
   box-shadow: 0px 15px 16.83px 0.17px rgba(0, 0, 0, 0.05);
@@ -237,6 +237,13 @@ list-type-ulli,
   -webkit-border-radius: 20px;
   -o-border-radius: 20px;
   -ms-border-radius: 20px;
+}
+
+.sign-in {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
 .display-flex {
@@ -277,7 +284,10 @@ list-type-ulli,
 }
 
 .signup {
-  margin-bottom: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
 .signup-content {
@@ -294,14 +304,16 @@ list-type-ulli,
 
 .signup-image {
   margin: 0 55px;
+  display: flex;
+  flex-direction: column;
+}
+
+.signup-image figure {
+  flex-grow: 1;
 }
 
 .form-title {
   margin-bottom: 33px;
-}
-
-.signup-image {
-  margin-top: 45px;
 }
 
 figure {
@@ -339,7 +351,7 @@ figure {
   display: block;
   text-align: center;
   text-decoration: underline;
-  margin-top: 20px;
+  /* margin-top: 20px; */
 }
 
 .signup-image-link:hover {
@@ -599,9 +611,15 @@ label.valid:after {
 }
 
 .signin-image {
-  margin-left: 110px;
+  margin-left: 6%;
   margin-right: 20px;
   margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.signin-image figure {
+  flex-grow: 1;
 }
 
 @media screen and (max-width: 1200px) {

@@ -24,6 +24,6 @@ export const publicRoutes = [
   { path: config.routes.trangthaidulieu, component: Dynamic },
   { path: config.routes.bangmau, component: Dynamic },
   { path: config.routes.chondoitac, component: Dynamic },
-  { path: config.routes.model, component: Model },
+  { path: config.routes.model, component: Model, Layout: null },
   { path: config.routes.register, component: Register, Layout: null },
 ];

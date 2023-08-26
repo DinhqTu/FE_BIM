@@ -1,6 +1,16 @@
-import { useEffect, useRef, useState } from 'react';
 import { Color } from 'three';
+// import { Link } from 'react-router-dom';
 import { IfcViewerAPI } from 'web-ifc-viewer';
+import { useEffect, useRef, useState } from 'react';
+// import {
+//   ClusterOutlined,
+//   FilterOutlined,
+//   ScissorOutlined,
+//   UnorderedListOutlined,
+//   ExpandAltOutlined,
+//   QuestionCircleOutlined,
+// } from '@ant-design/icons';
+
 import ButtonControl from '../../components/ButtonControl';
 import PropertyMenu from '../../components/PropertyMenu';
 import TreeMenu from '../../components/TreeMenu';
@@ -51,7 +61,7 @@ function Project() {
       viewer.axes.setAxes();
       viewer.IFC.setWasmPath('../../../wasm/');
     }
-
+    setViewer(viewer);
     async function loadIfc(url) {
       const model = await viewer.IFC.loadIfcUrl(url);
       setModel(model);
@@ -59,7 +69,7 @@ function Project() {
       await viewer.shadowDropper.renderShadow(model.modelID);
     }
 
-    loadIfc('../../../src/assets/models/Duplex-A-MEP.ifc');
+    loadIfc('../../../src/assets/models/TESTED_Simple_project_01.ifc');
 
     // const cubeCT = new CubeControls(cubeView.current, cubeCanvas.current, true);
   }, []);

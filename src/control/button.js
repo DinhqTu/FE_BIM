@@ -7,14 +7,11 @@ export class ControlModel {
     this.container = container;
   }
 
-  createPlane() {
-    // if (clippingPlaneActive) {
-    this.container.onauxclick(() => {
+  createPlane(clippingPlaneActive) {
+    if (clippingPlaneActive) {
       this.viewer.clipper.createPlane();
-
-    })
-    // } else {
-    //   this.viewer.clipper.deleteAllPlanes();
-    // }
+    } else {
+      this.viewer.clipper.deleteAllPlanes();
+    }
   }
 }

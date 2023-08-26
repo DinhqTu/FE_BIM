@@ -59,7 +59,7 @@ function Sidebar(props) {
       <Menu
         theme="light"
         mode="inline"
-        defaultSelectedKeys={['/']}
+        defaultSelectedKeys={'/'}
         style={{
           height: '100vh',
           backgroundColor: '#3b5999',
