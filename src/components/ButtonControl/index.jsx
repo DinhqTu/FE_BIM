@@ -6,9 +6,7 @@ import {
   ExpandAltOutlined,
   QuestionCircleOutlined,
 } from '@ant-design/icons';
-import { useEffect, useMemo, useState } from 'react';
-import { Color } from 'three';
-import { IfcViewerAPI } from 'web-ifc-viewer';
+import { useState } from 'react';
 
 const BUTTON = [
   { icon: <ClusterOutlined />, action: "tree" },
@@ -19,8 +17,9 @@ const BUTTON = [
   { icon: <QuestionCircleOutlined />, action: "info" },
 ];
 function ButtonControl(props) {
-  const { viewer, container, highlight, setHighlightActive, tree, setTreeActive } = props;  
+  const { viewer , container, highlight, setHighlightActive, tree, setTreeActive } = props;  
   const [ clipping, setClippingActive ] = useState(false);
+  const [ dimension, setDimensionActive ] = useState(false);
   const [ initButtonActive, setButtonActive ] = useState({
     "tree": false,
     "filter": false,
@@ -28,39 +27,68 @@ function ButtonControl(props) {
     "length": false,
     "properties": false,
     "info": false
-  })
+  });
 
-  const handleButtonClick = (index, action) => {
+  const handleButtonClick = (action) => {
     setButtonActive({ ...!initButtonActive, [action] : !initButtonActive[action] });
-  
-    if (index === 0) {
+    if (initButtonActive["clipping"]) {
+      handleDeletePlane();
+    }
+    if (action === 'tree') {
+      console.log("tree toggle");
       setTreeActive(!tree);
       return;
     }
-    if (index === 2){
+    if (action === 'clipping'){
       setClippingActive(!clipping);
     }
-    if (index === 4) {
+    if (action === 'properties') {
       setHighlightActive(!highlight);
     }
-    
+    if (action === 'length') {
+      setDimensionActive(!dimension)
+    }
   };  
+
+  const handleCreatePlane = async () => {
+    await viewer.clipper.createPlane();
+  };
+
+  const handleDeletePlane = async () => {
+    await viewer.clipper.deleteAllPlanes();
+  };
+
+  const handleDimensions = async () => {
+    await viewer?.dimensions.create();
+    viewer.dimensions.active = true;
+    viewer.dimensions.previewActive = true;
+  };
+
+  const handleRemoveDimensions = async () => {
+    viewer.dimensions.active = false;
+    viewer.dimensions.previewActive = false;
+  };
 
   window.ondblclick = () => {
     if (clipping){
       viewer.clipper.active = clipping;
-      viewer.clipper.createPlane();
-
+      handleCreatePlane();
+    }
+    if (dimension) {
+      handleDimensions();
     }
   }
 
   window.onmousemove = () => {
     if (highlight) {
       viewer.IFC.selector.prePickIfcItem();
-    } 
-    if (!clipping) {
-      viewer.clipper.deleteAllPlanes();
     }
+    if (!dimension) {
+      handleRemoveDimensions();
+    }
+    // if (!highlight) {
+    //   viewer.IFC.selector.unPrepickIfcItem();
+    // }
   }
 
   // const { handleButtonClick, clickedButtons, BUTTON, viewer } = props;
@@ -94,7 +122,7 @@ function ButtonControl(props) {
             initButtonActive[item.action] ? 'bg-gray-700 text-white' : ''
           }`}
           key={index}
-          onClick={() => handleButtonClick(index, item.action)}
+          onClick={() => handleButtonClick(item.action)}
         >
           {item.icon}
         </div>

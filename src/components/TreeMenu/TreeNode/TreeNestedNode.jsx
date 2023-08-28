@@ -1,22 +1,22 @@
+import { useEffect, useState } from 'react';
 import TreeNode from "./TreeNode";
 
 function TreeNestedNode(props) {
     const { node } = props;
+    const [ children, setChildren ] = useState([]);
+
+    useEffect(() => {
+        setChildren(node.children);
+    }, [node])
     
     return (
-        <li>
-            <ul className="nested">
-                <div>
-                    {/* {node.children.length > 0 ? <TreeNestedNode content={node.children} /> : <TreeNode content={node.children}/> } */}
-                    {node.children.length > 0 ? Object.keys(node.children).map((index) => {
-                        // <span className="caret">{node.children[index].type}</span>
-                        <TreeNestedNode node={node.children[index]}/>   
-                        
-                    }) : <TreeNode content={node}/>}
-                    {/* <TreeNestedNode node={node.children}/> */}
-                </div>
-            </ul>
-        </li>
+        <ul className='nested'>
+            <li>
+                <span>{node.expressID}</span>
+                {node ? <TreeNestedNode content={children} /> : <TreeNode content={node}/> }
+            </li>
+        </ul>
+
     );
 }
 

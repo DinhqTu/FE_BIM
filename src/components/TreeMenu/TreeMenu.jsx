@@ -1,31 +1,28 @@
+import { useEffect, useState } from 'react';
 import TreeNestedNode from './TreeNode/TreeNestedNode';
 
 function TreeMenu(props) {
-  const { root } = props;
-  if (!root) return;
-//   const cLength = root.children.length;
+    const { root } = props;
+    const [ children, setChildren ] = useState([]);
+
+    useEffect(() => {
+        setChildren(root.children);
+        // console.log(children);
+    }, [root])
 
   return (
-    <>
-        <li>
-            <ul className="nested">
-                <div className="display: inline-block; padding: 0 5px">
-                    {/* {root.children !== [] ? Object.keys(root.children).map((index) => {
-                        // <span className="caret">{root.children[index].type}</span>
-                        <TreeNestedNode node={root.children[index]}/>   
+    <div className='ifc-tree-view'> 
+        <ul>
+            <li>
+                <span> Name</span>
+                {children && children.length > 0 ? children.map((component, index) => {
+                    return (<TreeNestedNode key={index} node={component} />);
                         
-                    }) : <span className="caret">Hello</span>} */}
-                    {/* <span className="caret">{root.type}</span> */}
-                    {/* {root.children.map((child) => {
-                        return (
-                            <TreeNestedNode node={child}/>   
-                        );
-                    })} */}
-                </div>
-            </ul>
-        </li>
-    </>
+                }) : <span className="caret">Hello</span>}
+            </li>
+        </ul>
 
+    </div>
   );
 }
 
