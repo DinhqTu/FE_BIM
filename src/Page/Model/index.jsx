@@ -301,6 +301,8 @@ function Project() {
     setProperties(props);
   }
 
+  
+
   return (
     <section id="section" className="h-[100vh]">
       <Link
@@ -326,7 +328,7 @@ function Project() {
         onDoubleClick={highlight ? () => pickProperties() : () => {}}
       >
         <div className="ifc-property-menu">
-          {properties && <PropertyMenu properties={properties} />}
+          {properties && <PropertyMenu properties={properties} highlight={highlight}/>}
         </div>
       </div>
     </section>

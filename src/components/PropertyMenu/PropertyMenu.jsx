@@ -1,11 +1,11 @@
 import PropertyItem from './PropertyItem/PropertyItem';
 
 function PropertyMenu(props) {
-  const { properties } = props;
+  const { properties, highlight } = props;
   if (!properties) return;
   return (
     <>
-        {Object.keys({ ...properties }).map((key) => {
+        {highlight && Object.keys({ ...properties }).map((key) => {
             // console.logk(`${key}: ${{...properties[key]}.value}`);
             return (
                 <PropertyItem
