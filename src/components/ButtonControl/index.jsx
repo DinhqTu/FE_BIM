@@ -20,7 +20,7 @@ const BUTTON = [
   { icon: <QuestionCircleOutlined /> },
 ];
 function ButtonControl(props) {
-  const { handleButtonClick, clickedButtons, BUTTON, setHighlight } = props;
+  const { handleButtonClick, clickedButtons, BUTTON, setHighlight, setMeasuring } = props;
   // console.log(div);
   // const initialClickedButtons = new Array(BUTTON.length).fill(false);
   // const [clickedButtons, setClickedButtons] = useState(initialClickedButtons);
@@ -43,12 +43,32 @@ function ButtonControl(props) {
   //   updatedClickedButtons[index] = !updatedClickedButtons[index];
   //   setClickedButtons(updatedClickedButtons);
   // };
+  const checkboxes = document.getElementById("checkboxes");
+  const handleCheckboxList = (isOpen) => {
+    if (checkboxes) {
+      if (isOpen){
+        checkboxes.style.display = "initial";
+      } else {
+        checkboxes.style.display = "none";
+      }
+    }
+
+  }
   if (clickedButtons[4]) {
     setHighlight(true);
   } 
   if (!clickedButtons[4]) {
     setHighlight(false);
   }
+  if (clickedButtons[1]) {
+    // openCheckboxes()
+    handleCheckboxList(true);
+  } 
+  if (!clickedButtons[1]) {
+    handleCheckboxList(false);
+    // openCheckboxes();
+  }
+  // setMeasuring(clickedButtons[3]);
 
   return (
     <div className=" flex fixed bottom-8 left-1/2 -translate-x-1/2 z-10">

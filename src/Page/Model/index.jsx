@@ -25,6 +25,73 @@ const BUTTON = [
   { icon: <QuestionCircleOutlined /> },
 ];
 
+function checkbox(category, text) {
+  const checkbox = document.createElement("div");
+  checkbox.className = "checkbox-item";
+
+  const checkboxTextDiv = document.createElement("div");
+  checkboxTextDiv.style = "flex-grow: 1";
+
+  const checkboxInput = document.createElement("input");
+  checkboxTextDiv.textContent = text;
+
+  const checkboxInputDiv = document.createElement("div");
+  checkboxInputDiv.className = "checkbox-value";
+
+  checkboxInput.checked = true;
+  checkboxInput.id = category;
+  checkboxInput.type = "checkbox";
+
+  checkboxInputDiv.appendChild(checkboxInput);
+  checkbox.appendChild(checkboxTextDiv);
+  checkbox.appendChild(checkboxInputDiv);
+
+  return checkbox;
+}
+
+function createCheckboxes() {
+  const checkboxes = document.createElement("div");
+  checkboxes.className = "checkboxes";
+  checkboxes.id = "checkboxes";
+  checkboxes.style.display = "none";
+
+  let categoriesName = [
+    "Walls",
+    "Walls (standard case)",
+    "Slabs",
+    "Furniture",
+    "Doors",
+    "Windows",
+    "Curtain wall plates",
+    "Curtain wall structure",
+    "Spaces",
+    "Site",
+    "Roofs",
+    "Other",
+  ];
+
+  const categoriesText = [
+    "IFCWALL",
+    "IFCWALLSTANDARDCASE",
+    "IFCSLAB",
+    "IFCFURNISHINGELEMENT",
+    "IFCDOOR",
+    "IFCWINDOW",
+    "IFCPLATE",
+    "IFCMEMBER",
+    "IFCSPACE",
+    "IFCSITE",
+    "IFCROOF",
+    "IFCBUILDINGELEMENTPROXY",
+  ];
+
+  for (let i = 0; i < categoriesText.length; i++) {
+    checkboxes.appendChild(checkbox(categoriesText[i], categoriesName[i]));
+  }
+
+  document.body.appendChild(checkboxes);
+}
+
 function Project() {
   const ModelView = useRef(null);
   const [viewer, setViewer] = useState(null);
@@ -36,6 +103,9 @@ function Project() {
   const [highlight, setHighlight] = useState(false);
   const unHighlight = useCallback(() => Object.keys(properties).length !== 0 && viewer.IFC.selector.unpickIfcItems(), [highlight]);
   const emptyProps = useCallback(() => !highlight && setProperties({}), [highlight]);
+
+  // const [ measuring, setMeasuring ] = useState(false);
+  // const removeMeasuring = useCallback(() => measuring && handleRemoveDimentions(), [measuring]);
 
   useEffect(() => {
     const viewer = new IfcViewerAPI({
@@ -68,6 +138,8 @@ function Project() {
     }
 
     loadIfc('../../../src/assets/models/TESTED_Simple_project_01.ifc');
+
+    createCheckboxes();
 
     // window.addEventListener('dblclick', () => {
     //   viewer.IFC.selector.pickIfcItem(true);
@@ -216,14 +288,14 @@ function Project() {
     }
 
     // remove event listeners
-    return () => {
-      window.removeEventListener('mousemove', () => {
-        viewer.IFC.selector.pickIfcItem();
-      });
-      window.removeEventListener('mousemove', () => {
-        viewer.IFC.selector.prePickIfcItem();
-      });
-    };
+    // return () => {
+    //   window.removeEventListener('mousemove', () => {
+    //     viewer.IFC.selector.pickIfcItem();
+    //   });
+    //   window.removeEventListener('mousemove', () => {
+    //     viewer.IFC.selector.prePickIfcItem();
+    //   });
+    // };
   }, []);
 
   // logic handel active button
@@ -296,8 +368,6 @@ function Project() {
     setProperties(props);
   }
 
-  
-
   return (
     <section id="section" className="h-[100vh]">
       <Link
@@ -308,11 +378,11 @@ function Project() {
       </Link>
       <div className="flex justify-center items-center mb-2">
         <ButtonControl
-          // viewer={viewer}
           BUTTON={BUTTON}
           clickedButtons={clickedButtons}
           handleButtonClick={(index) => handleButtonClick(index)}
           setHighlight={setHighlight}
+          // setMeasuring={setMeasuring}
         />
       </div>
       <div
@@ -323,6 +393,7 @@ function Project() {
           unHighlight();
           emptyProps();
         }}
+        // onMouseMove={() => handleToolsVisibility(highlight, measuring)}
         onClick={highlight ? () => pickProperties() : () => {}}
       >
         <div className="ifc-property-menu">

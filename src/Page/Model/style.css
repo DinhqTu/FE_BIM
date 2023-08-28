@@ -169,3 +169,27 @@ ul,
   text-align: right;
 
 }
+
+.checkboxes {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  align-items: center;
+  background: var(--translucent-white);
+  backdrop-filter: var(--blur-filter);
+  border: none;
+  z-index: 1;
+}
+
+.checkbox-item {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 0.2rem;
+  border-bottom: solid 1px gray;
+}
+
+.checkbox-value {
+  width: 10%;
+  text-align: right;
+}
