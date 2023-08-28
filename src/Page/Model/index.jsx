@@ -1,7 +1,7 @@
 import { Color } from 'three';
 import { Link } from 'react-router-dom';
 import { IfcViewerAPI } from 'web-ifc-viewer';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import {
   ClusterOutlined,
   FilterOutlined,
@@ -28,27 +28,26 @@ const BUTTON = [
 function Project() {
   const ModelView = useRef(null);
   const [viewer, setViewer] = useState(null);
-  // const [div, setDiv] = useState(null);
   const [activeButton, setActiveButton] = useState(null);
   const initialClickedButtons = new Array(BUTTON.length).fill(false);
   const [clickedButtons, setClickedButtons] = useState(initialClickedButtons);
   // const [tree, setTree] = useState([]);
   const [properties, setProperties] = useState({});
   const [highlight, setHighlight] = useState(false);
+  const unHighlight = useCallback(() => Object.keys(properties).length !== 0 && viewer.IFC.selector.unpickIfcItems(), [highlight]);
+  const emptyProps = useCallback(() => !highlight && setProperties({}), [highlight]);
 
   useEffect(() => {
     const viewer = new IfcViewerAPI({
       container: ModelView.current,
       backgroundColor: new Color(255, 255, 255),
     });
-    // setViewer(viewer);
-    // setDiv(ModelView.current);
+    setViewer(viewer);
     if (ModelView.current) {
       viewer.axes.setAxes();
       // viewer.grid.setGrid();
       viewer.IFC.setWasmPath('../../../wasm/');
     }
-    setViewer(viewer);
     async function loadIfc(url) {
       // Load the model
       const model = await viewer.IFC.loadIfcUrl(url);
@@ -288,10 +287,6 @@ function Project() {
     }
   }
 
-  // if (clickedButtons[4]) {
-  //   setHighlight(!highlight);
-  // }
-
   async function pickProperties() {
     const result = await viewer.IFC.selector.pickIfcItem();
     if (!result) return;
@@ -324,8 +319,11 @@ function Project() {
         className="h-[100vh] w-full"
         id="viewer-container"
         ref={ModelView}
-        onMouseMove={highlight ? () => viewer.IFC.selector.prePickIfcItem() : () => {}}
-        onDoubleClick={highlight ? () => pickProperties() : () => {}}
+        onMouseMove={highlight ? () => viewer.IFC.selector.prePickIfcItem() : () => {
+          unHighlight();
+          emptyProps();
+        }}
+        onClick={highlight ? () => pickProperties() : () => {}}
       >
         <div className="ifc-property-menu">
           {properties && <PropertyMenu properties={properties} highlight={highlight}/>}
