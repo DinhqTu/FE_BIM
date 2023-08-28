@@ -147,3 +147,25 @@ ul,
   fill: #fff;
   transform: translateY(-7px);
 }
+
+.ifc-property-menu {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 5;
+  display: initial !important;
+}
+
+.ifc-property-item {
+  display: flex;
+  flex-direction: row;
+  /* width: 20%; */
+  /* padding: 0.5rem; */
+  border-bottom: solid 1px rgb(5, 3, 3);
+}
+
+.ifc-property-value {
+  width: 100%;
+  text-align: right;
+
+}

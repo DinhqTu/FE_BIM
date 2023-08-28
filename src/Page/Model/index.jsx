@@ -13,7 +13,9 @@ import {
 
 import ButtonControl from '../../components/ButtonControl';
 import './style.css';
-import { ControlModel } from '../../control/button';
+// import { ControlModel } from '../../control/button';
+
+import PropertyMenu from '../../components/PropertyMenu';
 const BUTTON = [
   { icon: <ClusterOutlined /> },
   { icon: <FilterOutlined /> },
@@ -26,11 +28,14 @@ const BUTTON = [
 function Project() {
   const ModelView = useRef(null);
   const [viewer, setViewer] = useState(null);
-  const [div, setDiv] = useState(null);
+  // const [div, setDiv] = useState(null);
   const [activeButton, setActiveButton] = useState(null);
   const initialClickedButtons = new Array(BUTTON.length).fill(false);
   const [clickedButtons, setClickedButtons] = useState(initialClickedButtons);
-  const [tree, setTree] = useState([]);
+  // const [tree, setTree] = useState([]);
+  const [properties, setProperties] = useState({});
+  const [highlight, setHighlight] = useState(false);
+
   useEffect(() => {
     const viewer = new IfcViewerAPI({
       container: ModelView.current,
@@ -58,7 +63,7 @@ function Project() {
 
       // trả về 1 đối tượng đại diện cho cấu trúc không gian trong mô hình
       const ifcProject = await viewer.IFC.getSpatialStructure(model.modelID);
-      setTree(ifcProject);
+      // setTree(ifcProject);
       // await setupAllCategories(); //for ifc categories filter
       createTreeMenu(ifcProject);
     }
@@ -68,14 +73,9 @@ function Project() {
     // window.addEventListener('dblclick', () => {
     //   viewer.IFC.selector.pickIfcItem(true);
     // });
-    window.addEventListener('mousemove', () => {
-      viewer.IFC.selector.pickIfcItem();
-    });
-    viewer.clipper.active = true;
-
-    window.addEventListener('mousemove', () => {
-      viewer.IFC.selector.prePickIfcItem();
-    });
+    // window.addEventListener('mousemove', () => {
+    //   viewer.IFC.selector.pickIfcItem();
+    // });
 
     viewer.clipper.active = true;
 
@@ -279,13 +279,26 @@ function Project() {
 
   //////////////////////// TOGGLE TREE PROPERTIES  ////////////////////////
 
-  const propertiesButton = document.getElementById('ifc-tree-menu');
-  if (propertiesButton) {
+  const treeMenu = document.getElementById('ifc-tree-menu');
+  if (treeMenu) {
     if (clickedButtons[0]) {
-      propertiesButton.style.display = 'initial';
+      treeMenu.style.display = 'initial';
     } else {
-      propertiesButton.style.display = 'none';
+      treeMenu.style.display = 'none';
     }
+  }
+
+  // if (clickedButtons[4]) {
+  //   setHighlight(!highlight);
+  // }
+
+  async function pickProperties() {
+    const result = await viewer.IFC.selector.pickIfcItem();
+    if (!result) return;
+    const { modelID, id } = result;
+    const props = await viewer.IFC.getProperties(modelID, id, true, false);
+
+    setProperties(props);
   }
 
   return (
@@ -298,13 +311,24 @@ function Project() {
       </Link>
       <div className="flex justify-center items-center mb-2">
         <ButtonControl
-          viewer={viewer}
+          // viewer={viewer}
           BUTTON={BUTTON}
           clickedButtons={clickedButtons}
           handleButtonClick={(index) => handleButtonClick(index)}
+          setHighlight={setHighlight}
         />
       </div>
-      <div className="h-[100vh] w-full" id="viewer-container" ref={ModelView}></div>
+      <div
+        className="h-[100vh] w-full"
+        id="viewer-container"
+        ref={ModelView}
+        onMouseMove={highlight ? () => viewer.IFC.selector.prePickIfcItem() : () => {}}
+        onDoubleClick={highlight ? () => pickProperties() : () => {}}
+      >
+        <div className="ifc-property-menu">
+          {properties && <PropertyMenu properties={properties} />}
+        </div>
+      </div>
     </section>
   );
 }

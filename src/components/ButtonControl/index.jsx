@@ -20,7 +20,7 @@ const BUTTON = [
   { icon: <QuestionCircleOutlined /> },
 ];
 function ButtonControl(props) {
-  const { handleButtonClick, clickedButtons, BUTTON, viewer } = props;
+  const { handleButtonClick, clickedButtons, BUTTON, setHighlight } = props;
   // console.log(div);
   // const initialClickedButtons = new Array(BUTTON.length).fill(false);
   // const [clickedButtons, setClickedButtons] = useState(initialClickedButtons);
@@ -43,6 +43,13 @@ function ButtonControl(props) {
   //   updatedClickedButtons[index] = !updatedClickedButtons[index];
   //   setClickedButtons(updatedClickedButtons);
   // };
+  if (clickedButtons[4]) {
+    setHighlight(true);
+  } 
+  if (!clickedButtons[4]) {
+    setHighlight(false);
+  }
+
   return (
     <div className=" flex fixed bottom-8 left-1/2 -translate-x-1/2 z-10">
       {BUTTON.map((item, index) => (
