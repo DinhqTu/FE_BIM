@@ -52,8 +52,8 @@ function ButtonControl(props) {
         checkboxes.style.display = "none";
       }
     }
-
   }
+  
   if (clickedButtons[4]) {
     setHighlight(true);
   } 

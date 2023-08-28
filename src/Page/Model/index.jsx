@@ -16,6 +16,23 @@ import './style.css';
 // import { ControlModel } from '../../control/button';
 
 import PropertyMenu from '../../components/PropertyMenu';
+
+import {
+  //need to load additional ifc entities or remove filter
+  IFCWALL,
+  IFCWALLSTANDARDCASE,
+  IFCSLAB,
+  IFCDOOR,
+  IFCWINDOW,
+  IFCFURNISHINGELEMENT,
+  IFCMEMBER,
+  IFCPLATE,
+  IFCSPACE,
+  IFCSITE,
+  IFCROOF,
+  IFCBUILDINGELEMENTPROXY,
+} from "web-ifc";
+
 const BUTTON = [
   { icon: <ClusterOutlined /> },
   { icon: <FilterOutlined /> },
@@ -92,6 +109,69 @@ function createCheckboxes() {
   document.body.appendChild(checkboxes);
 }
 
+const categories = {
+  IFCWALL,
+  IFCWALLSTANDARDCASE,
+  IFCSLAB,
+  IFCFURNISHINGELEMENT,
+  IFCDOOR,
+  IFCWINDOW,
+  IFCPLATE,
+  IFCMEMBER,
+  IFCSPACE,
+  IFCSITE,
+  IFCROOF,
+  IFCBUILDINGELEMENTPROXY,
+};
+
+const subsets = {};
+
+async function getAll(viewer, category) {
+  return viewer.IFC.loader.ifcManager.getAllItemsOfType(0, category, false);
+}
+
+function getName(category) {
+  const names = Object.keys(categories);
+  return names.find((name) => categories[name] === category);
+}
+
+async function newSubsetOfType(viewer, scene, category) {
+  const ids = await getAll(viewer, category);
+  return viewer.IFC.loader.ifcManager.createSubset({
+    modelID: 0,
+    scene,
+    ids,
+    removePrevious: true,
+    customID: category.toString(),
+  });
+}
+
+async function setupAllCategories(viewer, scene) {
+  const allCategories = Object.values(categories);
+  for (let i = 0; i < allCategories.length; i++) {
+    const category = allCategories[i];
+    await setupCategory(category, viewer, scene);
+  }
+}
+
+// Creates a new subset and configures the checkbox
+async function setupCategory(category, viewer, scene) {
+  subsets[category] = await newSubsetOfType(viewer, scene, category);
+  setupCheckBox(scene, category);
+}
+
+// Sets up the checkbox event to hide / show elements
+function setupCheckBox(scene, category) {
+  const name = getName(category);
+  const checkBox = document.getElementById(name);
+  checkBox.addEventListener("change", (event) => {
+    const checked = event.target.checked;
+    const subset = subsets[category];
+    if (checked) scene.add(subset);
+    else subset.removeFromParent();
+  });
+}
+
 function Project() {
   const ModelView = useRef(null);
   const [viewer, setViewer] = useState(null);
@@ -128,13 +208,14 @@ function Project() {
       // đại khái nó tạo ra 1 bản sao của mô hình chính với độ sâu trường , phông nền,...
       // viewer.context.renderer.postProduction.active = true;
 
-      // model.removeFromParent(); //for ifc categories filter
+      model.removeFromParent(); //for ifc categories filter
 
       // trả về 1 đối tượng đại diện cho cấu trúc không gian trong mô hình
       const ifcProject = await viewer.IFC.getSpatialStructure(model.modelID);
       // setTree(ifcProject);
       // await setupAllCategories(); //for ifc categories filter
       createTreeMenu(ifcProject);
+      setupAllCategories(viewer, viewer.context.getScene());
     }
 
     loadIfc('../../../src/assets/models/TESTED_Simple_project_01.ifc');
@@ -287,15 +368,6 @@ function Project() {
       }
     }
 
-    // remove event listeners
-    // return () => {
-    //   window.removeEventListener('mousemove', () => {
-    //     viewer.IFC.selector.pickIfcItem();
-    //   });
-    //   window.removeEventListener('mousemove', () => {
-    //     viewer.IFC.selector.prePickIfcItem();
-    //   });
-    // };
   }, []);
 
   // logic handel active button
@@ -398,6 +470,9 @@ function Project() {
       >
         <div className="ifc-property-menu">
           {properties && <PropertyMenu properties={properties} highlight={highlight}/>}
+        </div>
+        <div className="ifc-categories">
+
         </div>
       </div>
     </section>
