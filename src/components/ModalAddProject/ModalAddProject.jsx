@@ -45,11 +45,7 @@ const contentListNoTitle = {
             <BankOutlined style={{ fontSize: 24 }} />
             Tên dự án
           </div>
-          <input
-            type="text"
-            className="border w-full h-8 px-4"
-            placeholder="Tên thu gọn của dự án"
-          />
+          <input type="text" className="border w-full h-8 px-4" placeholder="Tên thu gọn của dự án" />
         </div>
         <div className="flex-grow">
           <div className="flex items-center gap-3 my-3">
@@ -64,26 +60,14 @@ const contentListNoTitle = {
           <box-icon name="spreadsheet"></box-icon>
           Mô tả dự án
         </div>
-        <textarea
-          className="border w-full p-4"
-          name=""
-          id=""
-          rows="4"
-          placeholder="Mô tả sơ bộ về dự án"
-        ></textarea>
+        <textarea className="border w-full p-4" name="" id="" rows="4" placeholder="Mô tả sơ bộ về dự án"></textarea>
       </div>
       <div className="my-3">
         <div className="flex items-center gap-3 my-3">
           <box-icon name="note"></box-icon>
           Ghi chú
         </div>
-        <textarea
-          className="border w-full p-4"
-          name=""
-          id=""
-          rows="4"
-          placeholder="Ghi chú chung về dự án"
-        ></textarea>
+        <textarea className="border w-full p-4" name="" id="" rows="4" placeholder="Ghi chú chung về dự án"></textarea>
       </div>
     </div>
   ),
@@ -111,9 +95,7 @@ const contentListNoTitle = {
           renderItem={(item, index) => (
             <List.Item>
               <List.Item.Meta
-                avatar={
-                  <Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`} />
-                }
+                avatar={<Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`} />}
                 title={<a href="https://ant.design">{item.title}</a>}
                 // description="Ant Design, a design language for background applications."
               />
@@ -129,9 +111,7 @@ const contentListNoTitle = {
           renderItem={(item, index) => (
             <List.Item>
               <List.Item.Meta
-                avatar={
-                  <Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`} />
-                }
+                avatar={<Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`} />}
                 title={<a href="https://ant.design">{item.title}</a>}
                 // description="Ant Design, a design language for background applications."
               />
@@ -180,19 +160,19 @@ const contentListNoTitle = {
       </div>
       <div className="flex justify-between">
         <div className="">
-          <div className="my-3">
+          <div className="my-3  flex items-center gap-2">
             <CheckSquareOutlined /> Ngày ký hợp đồng
           </div>
           <input className="border p-2" type="date" name="" id="" />
         </div>
-        <div className=" flex-grow mx-12">
-          <div className="my-3">
+        <div className=" items-center flex-grow mx-12">
+          <div className="my-3 flex items-center gap-2">
             <CheckSquareOutlined /> Hợp đồng với
           </div>
           <input className="border p-2 w-full" type="text" name="" id="" />
         </div>
         <div className="">
-          <div className="my-3">
+          <div className="my-3  flex items-center gap-2">
             <CheckSquareOutlined /> Trạng thái
           </div>
           <select className="border py-2 w-full" name="" id="">
@@ -217,14 +197,7 @@ function ModalAddProject(props) {
   };
   return (
     <>
-      <Modal
-        title="DỰ ÁN MỚI"
-        centered
-        open={open}
-        onOk={handleOpenModal}
-        onCancel={handleOpenModal}
-        width={1000}
-      >
+      <Modal title="DỰ ÁN MỚI" centered open={open} onOk={handleOpenModal} onCancel={handleOpenModal} width={1000}>
         <br />
         <Card
           style={{

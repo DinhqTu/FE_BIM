@@ -11,9 +11,10 @@ import {
   QuestionCircleOutlined,
 } from '@ant-design/icons';
 
-import ButtonControl from '../../components/ButtonControl';
 import './style.css';
 import { ControlModel } from '../../control/button';
+import ButtonControl from '../../components/ButtonControl';
+import Workspace, { Toolbar } from '../../components/Workspace';
 const BUTTON = [
   { icon: <ClusterOutlined /> },
   { icon: <FilterOutlined /> },
@@ -26,7 +27,6 @@ const BUTTON = [
 function Project() {
   const ModelView = useRef(null);
   const [viewer, setViewer] = useState(null);
-  const [div, setDiv] = useState(null);
   const [activeButton, setActiveButton] = useState(null);
   const initialClickedButtons = new Array(BUTTON.length).fill(false);
   const [clickedButtons, setClickedButtons] = useState(initialClickedButtons);
@@ -34,7 +34,7 @@ function Project() {
   useEffect(() => {
     const viewer = new IfcViewerAPI({
       container: ModelView.current,
-      backgroundColor: new Color(255, 255, 255),
+      backgroundColor: new Color(238, 237, 238),
     });
     // setViewer(viewer);
     // setDiv(ModelView.current);
@@ -47,7 +47,6 @@ function Project() {
     async function loadIfc(url) {
       // Load the model
       const model = await viewer.IFC.loadIfcUrl(url);
-
       /// tạo bóng cho mô hình
       await viewer.shadowDropper.renderShadow(model.modelID);
       // bật chế độ post-processing cho render của viewer. Thêm hiệu ứng hậu xử lý sau khi vẽ mô hình
@@ -58,12 +57,16 @@ function Project() {
 
       // trả về 1 đối tượng đại diện cho cấu trúc không gian trong mô hình
       const ifcProject = await viewer.IFC.getSpatialStructure(model.modelID);
+      // Lấy danh sách các IFC entities trong model
+      // const ifcEntities = viewer.IFC.getCollection(model.modelID).getAllItems();
+      // In danh sách các IFC entities console.log(viewer);
       setTree(ifcProject);
       // await setupAllCategories(); //for ifc categories filter
       createTreeMenu(ifcProject);
     }
 
-    loadIfc('../../../src/assets/models/TESTED_Simple_project_01.ifc');
+    // loadIfc('https://fe-bim.vercel.app/models/TESTED_Simple_project_01.ifc');
+    loadIfc('../../../public/models/TESTED_Simple_project_01.ifc');
 
     // window.addEventListener('dblclick', () => {
     //   viewer.IFC.selector.pickIfcItem(true);
@@ -289,14 +292,11 @@ function Project() {
   }
 
   return (
-    <section id="section" className="h-[100vh]">
-      <Link
-        to={'/cac-du-an'}
-        className="cursor-pointer flex justify-center items-center absolute top-10 left-10 border-2 hover:bg-slate-500 px-3 py-2 rounded-full z-[1]"
-      >
-        <box-icon name="arrow-back"></box-icon>
-      </Link>
-      <div className="flex justify-center items-center mb-2">
+    <section id="section" className="absolute top-16 bottom-0 w-full  border-t border-[#bfbfc6]">
+      <Toolbar />
+      <Workspace />
+
+      <div className="flex justify-center items-center">
         <ButtonControl
           viewer={viewer}
           BUTTON={BUTTON}
@@ -304,7 +304,7 @@ function Project() {
           handleButtonClick={(index) => handleButtonClick(index)}
         />
       </div>
-      <div className="h-[100vh] w-full" id="viewer-container" ref={ModelView}></div>
+      <div className="h-full w-full" id="viewer-container" ref={ModelView}></div>
     </section>
   );
 }
