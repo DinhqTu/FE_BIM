@@ -15,6 +15,8 @@ function App() {
           let Layout;
           if (route.Layout === null) {
             Layout = Fragment;
+          } else if (route.Layout === DefaultLayout) {
+            Layout = DefaultLayout;
           } else {
             Layout = SidebarLayout;
           }

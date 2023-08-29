@@ -20,6 +20,7 @@ function SidebarLayout({ children }) {
       <Sidebar collapsed={collapsed} />
       <Layout>
         <HeaderComponent
+          showBtn={true}
           collapsed={collapsed}
           colorBgContainer={colorBgContainer}
           setCollapsed={handleSetCollapsed}

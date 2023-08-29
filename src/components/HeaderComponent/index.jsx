@@ -9,23 +9,27 @@ import {
   SearchOutlined,
 } from '@ant-design/icons';
 function HeaderComponent(props) {
-  const { collapsed, colorBgContainer, setCollapsed } = props;
+  const { showBtn, collapsed, colorBgContainer, setCollapsed } = props;
   const { Header } = Layout;
   return (
-    <Header style={{ padding: 0, background: colorBgContainer }}>
+    <Header style={{ padding: 0, background: colorBgContainer, zIndex: 10 }}>
       <div className="flex justify-between">
         <div className="flex">
-          <Button
-            type="text"
-            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            onClick={setCollapsed}
-            style={{
-              fontSize: '20px',
-              width: 64,
-              height: 64,
-              transform: 'translateY(-3px)',
-            }}
-          />
+          {showBtn ? (
+            <Button
+              type="text"
+              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+              onClick={setCollapsed}
+              style={{
+                fontSize: '20px',
+                width: 64,
+                height: 64,
+                transform: 'translateY(-3px)',
+              }}
+            />
+          ) : (
+            <div className="text-[#3B5999]  text-lg font-extrabold text-center my-4 tracking-[5px] mx-4">VT CODE</div>
+          )}
           <div className="relative">
             <input
               type="search"
@@ -34,15 +38,11 @@ function HeaderComponent(props) {
               placeholder="Tìm kiếm . . ."
               className="px-4 border border-2  rounded-full w-[280px] h-8 focus:border-transparent"
             />
-            <SearchOutlined
-              style={{ position: 'absolute', right: 14, top: 25, cursor: 'pointer' }}
-            />
+            <SearchOutlined style={{ position: 'absolute', right: 14, top: 25, cursor: 'pointer' }} />
           </div>
         </div>
         <div className="flex items-center w-60">
-          <BellOutlined
-            style={{ fontSize: '20px', padding: 6, marginRight: 6, cursor: 'pointer' }}
-          />
+          <BellOutlined style={{ fontSize: '20px', padding: 6, marginRight: 6, cursor: 'pointer' }} />
           <DragOutlined
             style={{
               fontSize: '20px',
