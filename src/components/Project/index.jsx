@@ -43,18 +43,20 @@ function Project(props) {
           {/* <Meta title="Card title" description="22/08/23" style={{ cursor: 'pointer' }} /> */}
         </Card>
       ) : (
-        <Link to={'/model'}>
+        <Link to={'/model'} className="w-full">
           <div className="flex justify-between border-b-2 py-2 px-4 hover:bg-[#3B5999] hover:text-white cursor-pointer">
             <div className="flex items-center gap-4">
-              <FolderOutlined style={{ fontSize: 18 }} />
+              <FolderOutlined className="text-lg hidden md:flex" />
               <p className="font-semibold">Cầu Long Biên</p>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="  md:flex md:gap-2 md:items-center ">
               <UserOutlined />
-              <span>tôi</span>
+              <div>tôi</div>
             </div>
-            <div>22 thg 8, 2023</div>
-            <div>136,8 MB</div>
+            <div className="  md:flex md:gap-2 md:items-center ">
+              <div>22 thg 8, 2023</div>
+              <div>136,8 MB</div>
+            </div>
             <MoreOutlined />
           </div>
         </Link>

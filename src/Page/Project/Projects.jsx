@@ -43,7 +43,7 @@ function Projects() {
         <h1>CÁC DỰ ÁN</h1>
         <button
           onClick={() => setOpen(true)}
-          className="px-4 py-1 border rounded border-[#3b5999] text-[#3b5999] hover:bg-[#3b5999] hover:text-white"
+          className="px-2 py-1 border rounded border-[#3b5999] text-[#3b5999] hover:bg-[#3b5999] hover:text-white lg:px-4"
         >
           Thêm mới
         </button>
@@ -51,25 +51,21 @@ function Projects() {
       </div>
       <div className="flex justify-between mt-4 items-center">
         <input
-          className="px-4 border border-2  rounded-full w-[280px] h-8 focus:border-transparent"
+          className="px-2 border border-2  rounded-full w-1/2 h-8 focus:border-transparent lg:px-4 lg:w-[280px]"
           type="search"
           name=""
           id=""
           placeholder="Từ khoá ..."
         />
-        <div className=" flex gap-x-4 text-xl items-center ">
+        <div className=" flex gap-x-4 items-center md:text-xl ">
           <span
-            className={`flex items-center cursor-pointer p-2 ${
-              layout ? 'bg-neutral-400' : null
-            } hover:bg-neutral-400`}
+            className={`flex items-center cursor-pointer p-2 ${layout ? 'bg-neutral-400' : null} hover:bg-neutral-400`}
             onClick={() => setLayout(true)}
           >
             <MenuOutlined />
           </span>
           <span
-            className={`flex items-center cursor-pointer p-2 ${
-              layout ? null : 'bg-neutral-400'
-            }  hover:bg-neutral-400`}
+            className={`flex items-center cursor-pointer p-2 ${layout ? null : 'bg-neutral-400'}  hover:bg-neutral-400`}
             onClick={() => setLayout(false)}
           >
             <AppstoreOutlined />
@@ -91,7 +87,7 @@ function Projects() {
         </Space>
       </div>
 
-      <section className={`grid  gap-6 ${layout ? 'grid-cols-4 ' : 'grid-cols-1'} mt-6`}>
+      <section className={`center flex-wrap gap-x-8 gap-y-8 ${layout ? '' : 'flex-col w-full'} mt-6`}>
         {Array.from({ length: 12 }).map((_, i) => (
           <Project key={i} layout={layout} />
         ))}

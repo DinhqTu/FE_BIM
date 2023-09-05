@@ -164,3 +164,7 @@ i {
 canvas {
   height: 100% !important;
 }
+
+.ant-card-head {
+  padding-right: 0 !important;
+}

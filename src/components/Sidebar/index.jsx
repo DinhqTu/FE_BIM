@@ -22,9 +22,7 @@ function getItem(label, key, icon, children) {
 }
 const items = [
   getItem('Bảng Thông Tin', '/', <FileTextOutlined />),
-  getItem('Dự Án', 'du-an', <StarOutlined />, [
-    getItem('Các Dự Án', 'cac-du-an', <FileOutlined />),
-  ]),
+  getItem('Dự Án', 'du-an', <StarOutlined />, [getItem('Các Dự Án', 'cac-du-an', <FileOutlined />)]),
   getItem('Tài Khoản', 'tai-khoan', <UserOutlined />, [
     getItem('Người Dùng', 'nguoi-dung', <UserOutlined />),
     getItem('Nhóm Người Dùng', 'nhom-nguoi-dung', <TeamOutlined />),
@@ -51,11 +49,9 @@ function Sidebar(props) {
       collapsible
       collapsed={collapsed}
       width={260}
-      style={{ left: 0, top: 0, bottom: 0, backgroundColor: '#3b5999' }}
+      style={{ left: 0, top: 0, bottom: 0, backgroundColor: '#3b5999', height: '100%' }}
     >
-      <div className="text-white  text-lg font-extrabold text-center my-4 tracking-[5px] ">
-        VT CODE
-      </div>
+      <div className="text-white text-lg font-extrabold text-center my-4 tracking-[5px] ">VT CODE</div>
       <Menu
         theme="light"
         mode="inline"

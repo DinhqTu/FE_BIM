@@ -17,8 +17,10 @@ function SidebarLayout({ children }) {
   };
   return (
     <Layout>
-      <Sidebar collapsed={collapsed} />
-      <Layout>
+      <div className={`  xl:block xl:relative ${collapsed ? 'hidden' : 'block absolute right-0 z-20 '}`}>
+        <Sidebar collapsed={collapsed} />
+      </div>
+      <Layout style={{ width: '100%' }}>
         <HeaderComponent
           showBtn={true}
           collapsed={collapsed}

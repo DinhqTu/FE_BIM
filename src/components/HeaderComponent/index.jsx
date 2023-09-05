@@ -13,7 +13,7 @@ function HeaderComponent(props) {
   const { Header } = Layout;
   return (
     <Header style={{ padding: 0, background: colorBgContainer, zIndex: 10 }}>
-      <div className="flex justify-between">
+      <div className="flex justify-between ">
         <div className="flex">
           {showBtn ? (
             <Button
@@ -36,27 +36,20 @@ function HeaderComponent(props) {
               name=""
               id=""
               placeholder="Tìm kiếm . . ."
-              className="px-4 border border-2  rounded-full w-[280px] h-8 focus:border-transparent"
+              className="px-4 border border-2 hidden rounded-full h-8 focus:border-transparent md:w-[280px] md:inline-flex"
             />
-            <SearchOutlined style={{ position: 'absolute', right: 14, top: 25, cursor: 'pointer' }} />
+            <SearchOutlined className="hidden absolute right-[14px] top-[25px] cursor-pointer lg:flex" />
           </div>
         </div>
-        <div className="flex items-center w-60">
-          <BellOutlined style={{ fontSize: '20px', padding: 6, marginRight: 6, cursor: 'pointer' }} />
-          <DragOutlined
-            style={{
-              fontSize: '20px',
-              padding: 6,
-              marginRight: 12,
-              cursor: 'pointer',
-              rotate: '45deg',
-            }}
-          />{' '}
-          <div className="flex flex-grow justify-center items-center bg-[#3b5999] h-full text-white px-4 cursor-pointer ">
-            <UserOutlined style={{ fontSize: '20px', padding: 8 }} />
+        <div className="flex items-center mr-2 lg:w-60">
+          <BellOutlined className="text-xl p-[6px] mr-[6px] cursor-pointer" />
+          <DragOutlined className="text-xl p-[6px] cursor-pointer rotate-45 lg:mr-3" />
+          <div className=" hidden flex-grow justify-center items-center bg-[#3b5999] h-full text-white px-4 cursor-pointer lg:flex">
+            <UserOutlined className="text-xl p-2 cursor-pointer" />
             <span className="text-base  ">Dinh Tu</span>
-            <DownOutlined style={{ marginLeft: 4 }} />
+            <DownOutlined className="ml-1 cursor-pointer" />
           </div>
+          <UserOutlined className="text-xl p-2  cursor-pointer lg:hidden" />
         </div>
       </div>
     </Header>

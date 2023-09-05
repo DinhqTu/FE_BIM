@@ -172,7 +172,7 @@ const contentListNoTitle = {
           <input className="border p-2 w-full" type="text" name="" id="" />
         </div>
         <div className="">
-          <div className="my-3  flex items-center gap-2">
+          <div className="my-3 flex items-center gap-2">
             <CheckSquareOutlined /> Trạng thái
           </div>
           <select className="border py-2 w-full" name="" id="">
